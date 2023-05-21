@@ -1,20 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+// import { NavigationContainer } from "@react-navigation/native";
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import Home from "./Screens/Home";
+// import Login from "./Screens/Login";
+import { getCurrentUser } from "./Services/auth";
+import { useEffect, useState } from "react";
+import LoginStack from "./Stacks/LoginStack";
+import BusinessStack from "./Stacks/BusinessStack";
 
-export default function App() {
+// const Stack = createNativeStackNavigator();
+
+const App = () => {
+  const [User, setUser] = useState(null);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await getCurrentUser();
+      if (user) {
+        setUser(user);
+      }
+    }
+
+    fetchUser();
+  }, []);
+
+  const handleLogout = async () => {
+    await logout();
+    setUser(null);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      {User ? (
+        <BusinessStack User={User} onLogout={() => handleLogout} />
+      ) : (
+        <LoginStack />
+      )}
+      <StatusBar style="dark" />
+    </SafeAreaProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
