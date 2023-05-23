@@ -1,10 +1,12 @@
 import React from "react";
 import { Text, SafeAreaView, StyleSheet, Button } from "react-native";
 import styles from "../Stylels";
-import { logout } from "../Services/auth";
+import { getCurrentUser, logout } from "../Services/auth";
 
-export default function Home({ route, navigation }) {
-  const { User, onLogout } = route.params;
+const User = getCurrentUser();
+
+export default function Home({ navigation }) {
+  // const { User } = route.params;
   console.log(User);
   const handleLogout = async () => {
     await logout();
@@ -13,7 +15,8 @@ export default function Home({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Welcome {User.data.user_email}</Text>
-      <Button title="Logout" onPress={onLogout} />
+      <Button title="Logout" onPress={handleLogout} />
+      <Button title="Profile" onPress={() => navigation.navigate("Profile")} />
     </SafeAreaView>
   );
 }

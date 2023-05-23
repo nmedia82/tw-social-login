@@ -22,22 +22,12 @@ const App = () => {
         setUser(user);
       }
     }
-
     fetchUser();
   }, []);
 
-  const handleLogout = async () => {
-    await logout();
-    setUser(null);
-  };
-
   return (
     <SafeAreaProvider>
-      {User ? (
-        <BusinessStack User={User} onLogout={() => handleLogout} />
-      ) : (
-        <LoginStack />
-      )}
+      {User ? <BusinessStack /> : <LoginStack />}
       <StatusBar style="dark" />
     </SafeAreaProvider>
   );

@@ -3,11 +3,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfileScreen from "../Screens/Profile";
 import Login from "../Screens/Login";
-import { StatusBar } from "expo-status-bar";
+import Home from "../Screens/Home";
 
 const Stack = createNativeStackNavigator();
 
-export default function LoginStack() {
+export default function LoginStack({ User }) {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -17,9 +17,15 @@ export default function LoginStack() {
           options={{ title: "Login" }}
         />
         <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ title: "Home" }}
+          initialParams={{ User }}
+        />
+        <Stack.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{ title: "Login" }}
+          options={{ title: "Profile" }}
         />
       </Stack.Navigator>
       {/* <StatusBar style="auto" /> */}
