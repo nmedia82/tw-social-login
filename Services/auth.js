@@ -51,24 +51,24 @@ export async function getCurrentUser() {
   }
 }
 
-const storeData = async (key, value) => {
+export async function storeData(key, value) {
   try {
-    await AsyncStorage.setItem(key, value);
+    await AsyncStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
-    // saving error
+    throw new Error(e.message);
   }
-};
+}
 
-const getData = async (key) => {
+export async function getData(key) {
   try {
     const value = await AsyncStorage.getItem(key);
     if (value !== null) {
-      // value previously stored
+      return JSON.parse(value);
     }
   } catch (e) {
-    // error reading value
+    throw new Error(e.message);
   }
-};
+}
 
 export function getUserRole() {
   try {
@@ -76,7 +76,7 @@ export function getUserRole() {
     roles = JSON.parse(roles);
 
     if (roles.includes("administrator")) return "admin";
-    if (roles.includes("vendor")) return "vendor";
+    if (roles.includes("trainer")) return "vendor";
     if (roles.includes("customer")) return "customer";
   } catch (ex) {
     return null;

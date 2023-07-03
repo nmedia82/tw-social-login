@@ -7,25 +7,24 @@ import {
   Alert,
   TouchableOpacity,
   ActivityIndicator,
-  Image,
 } from "react-native";
 import styles from "../Stylels";
-import { login } from "../Services/auth";
+import { createAccount } from "../Services/model";
 
-const Login = ({ navigation }) => {
+const Signup = ({ route, navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
     setIsLoading(true);
     try {
       if (email && password) {
         const data = { email, password };
-        const user = await login(data);
+        const user = await createAccount(data);
+        // console.log(user);
         setIsLoading(false);
-        // navigation.navigate("HomeVendor", { User: user });
-        navigation.navigate("VendorStack");
+        navigation.navigate("Home");
       }
     } catch (error) {
       setIsLoading(false);
@@ -33,13 +32,12 @@ const Login = ({ navigation }) => {
     }
   };
 
-  const navigateSignup = () => {
-    navigation.navigate("Signup");
+  const navigateLogin = () => {
+    navigation.navigate("Login");
   };
 
   return (
-    <View style={styles.loginContainer}>
-      <Image source={require("../assets/logo.png")} style={styles.logo} />
+    <View style={styles.container}>
       <TextInput
         placeholder="Email"
         onChangeText={(text) => setEmail(text)}
@@ -54,7 +52,7 @@ const Login = ({ navigation }) => {
         secureTextEntry
       />
       <TouchableOpacity
-        onPress={handleLogin}
+        onPress={handleSignup}
         disabled={isLoading}
         style={[styles.button, isLoading && styles.buttonDisabled]}
       >
@@ -64,11 +62,11 @@ const Login = ({ navigation }) => {
           <Text style={styles.buttonText}>Login</Text>
         )}
       </TouchableOpacity>
-      <TouchableOpacity onPress={navigateSignup}>
-        <Text style={styles.forgotPassword}>Don't have an account?</Text>
+      <TouchableOpacity onPress={navigateLogin}>
+        <Text style={styles.forgotPassword}>Login here</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default Login;
+export default Signup;

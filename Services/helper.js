@@ -1,7 +1,5 @@
-import data from "./../services/data.json";
-
 export const get_setting = (key, defaultValue = "") => {
-  var settings = localStorage.getItem("jobdone_settings");
+  var settings = localStorage.getItem("tokenwala_settings");
   if (!settings) return defaultValue;
   settings = JSON.parse(settings);
   if (!settings[key]) return defaultValue;
@@ -26,10 +24,6 @@ export const _to_options = (options) => {
   }));
 };
 
-export function get_orderconvo_api_url() {
-  return `${data.siteurl}/wp-json/wooconvo/v1`;
-}
-
 export function get_job_thumb(job) {
   return (
     <img
@@ -38,4 +32,12 @@ export function get_job_thumb(job) {
       alt={job.orderID}
     />
   );
+}
+
+export function get_user_role(user) {
+  let roles = [...user.roles];
+
+  if (roles.includes("administrator")) return "admin";
+  if (roles.includes("trainer")) return "vendor";
+  if (roles.includes("customer")) return "customer";
 }

@@ -1,25 +1,39 @@
 import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-// import { NavigationContainer } from "@react-navigation/native";
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import Home from "./Screens/Home";
-// import Login from "./Screens/Login";
-import { getCurrentUser } from "./Services/auth";
+import { getCurrentUser, storeData } from "./Services/auth";
 import { useEffect, useState } from "react";
 import LoginStack from "./Stacks/LoginStack";
-import BusinessStack from "./Stacks/BusinessStack";
+import AuthStack from "./Stacks/AuthStack";
+import VendorStack from "./Stacks/VendorStack";
+import AppContainer from "./NavContainers";
+import { get_user_role } from "./Services/helper";
+import { getVendorCounters } from "./Services/model";
+// import BusinessStack from "./Stacks/BusinessStack";
 
 // const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [User, setUser] = useState(null);
+  const [VendorCounters, setVendorCounters] = useState([]);
 
   useEffect(() => {
     async function fetchUser() {
       const user = await getCurrentUser();
       if (user) {
         setUser(user);
+
+        if ("vendor" === get_user_role(user)) {
+          try {
+            const { data: couter_data } = await getVendorCounters(user.ID);
+            await storeData("vendor_counters", couter_data.data.counters);
+          } catch (e) {
+            console.log("Error while store data:", e.message);
+          }
+          // console.log(couter_data.data.counters);
+          // setVendorCounters();
+        }
       }
     }
     fetchUser();
@@ -27,7 +41,7 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      {User ? <BusinessStack /> : <LoginStack />}
+      <AppContainer User={User} />
       <StatusBar style="dark" />
     </SafeAreaProvider>
   );

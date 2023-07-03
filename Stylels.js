@@ -1,12 +1,23 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  container: {
+  screenContainer: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     padding: 20,
+  },
+  loginContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    padding: 20,
+  },
+  logo: {
+    width: 150,
+    height: 150,
   },
   title: {
     fontSize: 24,
@@ -35,6 +46,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 16,
+    width: "100%",
   },
   buttonDisabled: {
     opacity: 0.6,
@@ -42,6 +54,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#FFF",
     fontSize: 16,
+  },
+  ticketIcon: {},
+  iconContainer: {
+    marginTop: 15,
+    marginBottom: 25,
   },
 });
 
