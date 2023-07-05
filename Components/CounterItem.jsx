@@ -1,28 +1,25 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import CounterItemStatuses from "./CounterItemStatuses";
 
-const CounterItem = ({ counterData }) => {
-  const { title, status, max_number } = counterData;
+const CounterItem = ({ counterData, onPress }) => {
+  // console.log(counterData);
+  const { title, status, statuses_stats } = counterData;
+
+  const handlePress = () => {
+    onPress(counterData);
+  };
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handlePress}>
       <View style={styles.leftSection}>
         <Text style={styles.title}>{title}</Text>
-        <View style={styles.tokensContainer}>
-          <Icon
-            name="ticket"
-            size={18}
-            color="blue"
-            style={styles.ticketIcon}
-          />
-          <Text style={styles.max_number}>{max_number}</Text>
-        </View>
+        <CounterItemStatuses statuses_stats={statuses_stats} />
       </View>
       <View style={styles.rightSection}>
         <Text style={styles.status}>{status}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -51,10 +48,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 8,
   },
+  tokenItem: {
+    flexDirection: "row", // Use row direction for each token item
+    alignItems: "center",
+    marginRight: 12, // Add some margin to the right
+  },
   ticketIcon: {
     marginRight: 6,
   },
-  max_number: {
+  status_number: {
     fontSize: 14,
     color: "#888",
   },

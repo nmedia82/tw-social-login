@@ -10,7 +10,22 @@ export function getVendorCounters(user_id) {
   return httpService.get(url);
 }
 
+export function getCounterByID(counter_id) {
+  const url = `${endpoint}/get-counter?counter_id=${counter_id}`;
+  return httpService.get(url);
+}
+
 export function openCounter(data) {
   const url = `${endpoint}/open-counter`;
+  return httpService.post(url, data);
+}
+
+export function setTokenStatus(data) {
+  const url = `${endpoint}/set-token-status`;
+  return httpService.post(url, data);
+}
+
+export function setTokenStatusAndNext(data) {
+  const url = `${endpoint}/set-token-status-serving-next`;
   return httpService.post(url, data);
 }

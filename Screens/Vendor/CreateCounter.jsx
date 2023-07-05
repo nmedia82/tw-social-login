@@ -7,8 +7,8 @@ import {
   StyleSheet,
   ToastAndroid,
 } from "react-native";
-import { getCurrentUser, getData, storeData } from "../Services/auth";
-import { openCounter } from "../Services/model";
+import { getCurrentUser, getData, storeData } from "../../Services/auth";
+import { openCounter } from "../../Services/model";
 
 const CreateNewCounter = ({ navigation }) => {
   const [User, setUser] = useState("");
@@ -44,16 +44,11 @@ const CreateNewCounter = ({ navigation }) => {
       user_id: User.ID,
     };
 
-    try {
-      const { data: new_counter } = await openCounter(counterData);
-      if (new_counter.success) {
-        let counters = await getData("vendor_counters");
-        counters = [...counters, new_counter.data.counter];
-        await storeData("vendor_counters", counters);
-        navigation.navigate("HomeVendor");
-      }
-    } catch (e) {
-      console.log(e);
+    const { data: new_counter } = await openCounter(counterData);
+    if (new_counter.success) {
+      navigation.navigate("HomeVendor", {
+        newCounterData: new_counter.data.counter,
+      });
     }
   };
 

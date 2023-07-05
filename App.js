@@ -21,19 +21,16 @@ const App = () => {
   useEffect(() => {
     async function fetchUser() {
       const user = await getCurrentUser();
-      if (user) {
-        setUser(user);
-
-        if ("vendor" === get_user_role(user)) {
-          try {
+      try {
+        if (user) {
+          setUser(user);
+          if ("vendor" === get_user_role(user)) {
             const { data: couter_data } = await getVendorCounters(user.ID);
             await storeData("vendor_counters", couter_data.data.counters);
-          } catch (e) {
-            console.log("Error while store data:", e.message);
           }
-          // console.log(couter_data.data.counters);
-          // setVendorCounters();
         }
+      } catch (e) {
+        console.log("Error while store data:", e.message);
       }
     }
     fetchUser();

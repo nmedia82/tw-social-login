@@ -14,8 +14,8 @@ export async function login(user_info) {
 
   if (success) {
     // login_user_locally(response);
-    await storeData("user", JSON.stringify(response.user));
-    await storeData("user_roles", JSON.stringify(response.user_roles));
+    await storeData("user", response.user);
+    await storeData("user_roles", response.user_roles);
     return response.user;
   }
 
@@ -53,7 +53,9 @@ export async function getCurrentUser() {
 
 export async function storeData(key, value) {
   try {
-    await AsyncStorage.setItem(key, JSON.stringify(value));
+    if (value) {
+      await AsyncStorage.setItem(key, JSON.stringify(value));
+    }
   } catch (e) {
     throw new Error(e.message);
   }

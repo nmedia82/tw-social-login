@@ -8,6 +8,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     padding: 20,
   },
+  scrollViewContent: {
+    flex: 1,
+  },
   loginContainer: {
     flex: 1,
     backgroundColor: "#fff",
