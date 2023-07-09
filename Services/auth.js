@@ -6,6 +6,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const { siteurl } = pluginData;
 const endpoint = `${siteurl}/wp-json/tokenwala/v1`;
 
+export async function singup(user_data) {
+  const url = `${endpoint}/signup`;
+  const { data } = await httpService.post(url, user_data);
+  const { success, data: response } = data;
+  console.log(response);
+
+  if (success) {
+    // login_user_locally(response);
+    // await storeData("user", response.user);
+    return response.user_id;
+  }
+
+  throw new Error("Username/password is invalid");
+}
+
 export async function login(user_info) {
   const url = `${endpoint}/login`;
   const { data } = await httpService.post(url, user_info);
@@ -20,6 +35,36 @@ export async function login(user_info) {
   }
 
   throw new Error("Username/password is invalid");
+}
+
+export async function loginByPin(user_info) {
+  const url = `${endpoint}/login-by-pin`;
+  const { data } = await httpService.post(url, user_info);
+  // console.log(data);
+  const { success, data: response } = data;
+
+  if (success) {
+    // login_user_locally(response);
+    // await storeData("user", response.user);
+    return response.user_id;
+  }
+
+  throw new Error("Username/password is invalid");
+}
+
+export async function verifyByPin(user_info) {
+  const url = `${endpoint}/verify-by-pin`;
+  const { data } = await httpService.post(url, user_info);
+  // console.log(data);
+  const { success, data: response } = data;
+
+  if (success) {
+    // login_user_locally(response);
+    await storeData("user", response.user);
+    return response.user;
+  }
+
+  throw new Error("Pin is invalid");
 }
 
 export function login_user_locally(user_data) {

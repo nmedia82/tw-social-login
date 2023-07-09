@@ -38,8 +38,8 @@ export function get_user_role(user) {
   let roles = [...user.roles];
 
   if (roles.includes("administrator")) return "admin";
-  if (roles.includes("trainer")) return "vendor";
-  if (roles.includes("customer")) return "customer";
+  if (roles.includes("vendor")) return "vendor";
+  if (roles.includes("subscriber")) return "subscriber";
 }
 
 export function time_elapsed(the_date) {

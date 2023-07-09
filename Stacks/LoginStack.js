@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfileScreen from "../Screens/Profile";
 import Login from "../Screens/Login";
-import Home from "../Screens/Home";
+import Home from "../Screens/User/Home";
 import HomeVendor from "../Screens/Vendor/HomeVendor";
 import Signup from "../Screens/Signup";
 import { get_user_role } from "../Services/helper";

@@ -5,6 +5,7 @@ import CreateNewCounter from "../Screens/Vendor/CreateCounter";
 import CounterDetail from "../Screens/Vendor/CounterDetail";
 import CounterTokens from "../Screens/Vendor/CounterTokens";
 import VendorSettings from "../Screens/Settings/VendorSettings";
+import VendorCounters from "../Screens/Vendor/VendorCounters";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,11 @@ export default function VendorStack() {
         name="VendorSettings"
         component={VendorSettings}
         options={{ title: "Settings" }}
+      />
+      <Stack.Screen
+        name="VendorCounters"
+        component={VendorCounters}
+        options={{ title: "My Counters" }}
       />
     </Stack.Navigator>
   );

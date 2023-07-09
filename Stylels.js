@@ -5,11 +5,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     padding: 20,
   },
   scrollViewContent: {
     flex: 1,
+  },
+  iconContainer: {
+    marginBottom: 20,
+    borderBottomColor: "black",
+    borderBottomWidth: 1, // Specify the desired border width
   },
   loginContainer: {
     flex: 1,
@@ -21,6 +26,8 @@ const styles = StyleSheet.create({
   logo: {
     width: 150,
     height: 150,
+    marginTop: 10,
+    marginBottom: 20,
   },
   title: {
     fontSize: 24,
@@ -59,9 +66,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   ticketIcon: {},
-  iconContainer: {
-    marginTop: 15,
-    marginBottom: 25,
+
+  switchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  businessInfo: {
+    // marginVertical: 10,
+    width: "100%",
+  },
+  recentCountersContainer: {
+    width: "100%",
+    alignItems: "center",
+  },
+  searchResults: {
+    width: "100%",
+  },
+  searchResults: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "flex-start",
   },
 });
 

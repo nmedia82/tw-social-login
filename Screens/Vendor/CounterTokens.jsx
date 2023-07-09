@@ -12,11 +12,14 @@ import {
 import CounterTokenItem from "../../Components/CounterTokenItem";
 import Heading from "../../Components/Header";
 import {
+  addExtraTokens,
+  closeCounter,
   getCounterByID,
   setTokenStatus,
   setTokenStatusAndNext,
 } from "../../Services/model";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { Picker } from "@react-native-picker/picker";
 
 const HTTP_REQUEST_DELAY = 10000;
 
@@ -27,6 +30,7 @@ const CounterTokens = ({ navigation, route }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isRefreshButtonDisabled, setIsRefreshButtonDisabled] = useState(false);
   const [cooldownTime, setCooldownTime] = useState(HTTP_REQUEST_DELAY / 1000);
+  const [ExtraTokens, setExtraTokens] = useState(1);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -136,6 +140,44 @@ const CounterTokens = ({ navigation, route }) => {
     });
   }, [navigation, isRefreshButtonDisabled, cooldownTime]);
 
+  const handleCloseCounter = async () => {
+    Alert.alert(
+      "Confirm",
+      "Are you sure you want to close the counter?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Close",
+          onPress: async () => {
+            const postData = { counter_id: Counter.id };
+            const { data: response } = await closeCounter(postData);
+            if (!response.status) {
+              return Alert.alert("Error", message);
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const handleExtraTokens = async () => {
+    const postData = { counter_id: Counter.id, increase: ExtraTokens };
+    try {
+      const { data: response } = await addExtraTokens(postData);
+      const { new_tokens, message } = response.data;
+      if (!response.status) {
+        return Alert.alert("Error", message);
+      }
+      setCounterTokens(new_tokens);
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    }
+  };
+
   return (
     <View>
       <ScrollView
@@ -144,7 +186,24 @@ const CounterTokens = ({ navigation, route }) => {
           <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
         }
       >
-        <Heading>{Counter.title}</Heading>
+        <View style={styles.headContainer}>
+          <Heading style={styles.headTitle}>{Counter.title}</Heading>
+          <View style={styles.closeButton}>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                { backgroundColor: "red" },
+                Counter.status === "closed" && styles.disabledButton,
+              ]}
+              onPress={handleCloseCounter}
+              disabled={Counter.status === "closed"}
+            >
+              <Text style={styles.buttonText}>
+                {Counter.status === "closed" ? "Closed" : "Close"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         {isLoading ? (
           <ActivityIndicator
             size="large"
@@ -152,14 +211,38 @@ const CounterTokens = ({ navigation, route }) => {
             style={styles.loadingIndicator}
           />
         ) : (
-          CounterTokens.map((Token, index) => (
-            <CounterTokenItem
-              Token={Token}
-              key={index}
-              onTokenStatusUpdate={handleTokenStatusUpdate}
-              onRefresh={handleRefresh}
-            />
-          ))
+          <>
+            {CounterTokens.map((Token, index) => (
+              <CounterTokenItem
+                Token={Token}
+                key={index}
+                onTokenStatusUpdate={handleTokenStatusUpdate}
+                onRefresh={handleRefresh}
+              />
+            ))}
+            <View style={styles.addTokenContainer}>
+              <View style={styles.tokenDropdown}>
+                <Picker
+                  selectedValue={ExtraTokens}
+                  onValueChange={(itemValue) => setExtraTokens(itemValue)}
+                >
+                  {Array.from({ length: 10 }, (_, index) => (
+                    <Picker.Item
+                      key={index}
+                      label={(index + 1).toString()}
+                      value={index + 1}
+                    />
+                  ))}
+                </Picker>
+              </View>
+              <TouchableOpacity
+                style={styles.addButton}
+                onPress={handleExtraTokens}
+              >
+                <Text style={styles.buttonText}>Add Extra Tokens</Text>
+              </TouchableOpacity>
+            </View>
+          </>
         )}
       </ScrollView>
     </View>
@@ -184,6 +267,34 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     flex: 1,
   },
+  headContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: "#fff",
+  },
+  headTitle: {
+    flex: 1, // Take up available space on the left
+  },
+  closeButton: {
+    flex: 1, // Take up equal space
+    alignItems: "flex-end", // Align the button to the right side
+  },
+  button: {
+    backgroundColor: "red",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 4,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  disabledButton: {
+    opacity: 0.5, // You can adjust the opacity value to your preference
+  },
   value: {
     fontSize: 16,
     flex: 2,
@@ -197,6 +308,25 @@ const styles = StyleSheet.create({
   cooldownText: {
     fontSize: 16,
     fontWeight: "bold",
+  },
+  addTokenContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  tokenDropdown: {
+    flex: 1,
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+  },
+  addButton: {
+    backgroundColor: "blue",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 5,
   },
 });
 

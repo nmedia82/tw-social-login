@@ -14,11 +14,10 @@ function VendorSettings({ navigation }) {
 
   // Handle item press
   const handleItemPress = (itemText) => {
-    console.log(itemText);
     if (itemText === "Logout") {
       handleLogout();
-    } else {
-      // Handle other item press actions
+    } else if (itemText === "My Counters") {
+      navigation.navigate("VendorCounters");
     }
   };
 

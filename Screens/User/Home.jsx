@@ -22,7 +22,7 @@ import IconInfo from "../../Components/IconsInfo";
 
 const MAX_TOKEN_DISPLAY = 3;
 
-export default function HomeVendor({ navigation }) {
+export default function Home({ navigation }) {
   const [recentCounters, setRecentCounters] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -56,8 +56,8 @@ export default function HomeVendor({ navigation }) {
     }
   };
 
-  const handleIconPress = () => {
-    navigation.navigate("CreateNewCounter");
+  const handleGetTokenPress = () => {
+    navigation.navigate("GetToken");
   };
 
   const handleCounterItemPress = (counterData) => {
@@ -79,16 +79,16 @@ export default function HomeVendor({ navigation }) {
     >
       <SafeAreaView style={styles.screenContainer}>
         <TouchableOpacity
-          onPress={handleIconPress}
+          onPress={handleGetTokenPress}
           style={styles.iconContainer}
         >
           <Icon
-            name="plus-circle"
+            name="repeat"
             size={98}
             color="blue"
             style={styles.ticketIcon}
           />
-          <Text>Add Counter</Text>
+          <Text>Get Token</Text>
         </TouchableOpacity>
 
         {recentCounters.length > 0 && (
