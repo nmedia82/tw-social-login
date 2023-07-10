@@ -1,13 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 import { logout } from "../../Services/auth";
 import { ListItem } from "react-native-elements";
 
 // Define the VendorSettings component
-function VendorSettings({ navigation }) {
+function UserSettings({ navigation }) {
   // Define the items and their icons
   const items = [
-    { title: "My Counters", icon: "av-timer" },
+    { title: "My Tokens", icon: "av-timer" },
     { title: "Profile Settings", icon: "av-timer" },
     { title: "Logout", icon: "av-timer" },
   ];
@@ -16,7 +17,7 @@ function VendorSettings({ navigation }) {
   const handleItemPress = (itemText) => {
     if (itemText === "Logout") {
       handleLogout();
-    } else if (itemText === "My Counters") {
+    } else if (itemText === "My Tokens") {
       navigation.navigate("VendorCounters");
     }
   };
@@ -70,4 +71,4 @@ const styles = StyleSheet.create({
 });
 
 // Export the component
-export default VendorSettings;
+export default UserSettings;

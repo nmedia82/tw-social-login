@@ -48,6 +48,9 @@ const styles = StyleSheet.create({
     color: "blue",
     textDecorationLine: "underline",
   },
+  searchContainer: {
+    width: "100%",
+  },
   button: {
     backgroundColor: "#007AFF",
     borderRadius: 8,
@@ -81,12 +84,42 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   searchResults: {
-    width: "100%",
-  },
-  searchResults: {
     flex: 1,
     width: "100%",
     justifyContent: "flex-start",
+    paddingTop: 15,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 16,
+    borderRadius: 8,
+    width: "80%",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  closeButton: {
+    backgroundColor: "#007AFF",
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 16,
+    width: "100%",
+  },
+  closeButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
 

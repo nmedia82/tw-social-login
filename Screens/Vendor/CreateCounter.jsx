@@ -47,7 +47,7 @@ const CreateNewCounter = ({ navigation }) => {
     const { data: new_counter } = await openCounter(counterData);
     if (new_counter.success) {
       navigation.navigate("HomeVendor", {
-        newCounterData: new_counter.data.counter,
+        new_counter: new_counter.data.counter,
       });
     }
   };

@@ -22,13 +22,18 @@ import IconInfo from "../../Components/IconsInfo";
 
 const MAX_TOKEN_DISPLAY = 3;
 
-export default function HomeVendor({ navigation }) {
+export default function HomeVendor({ navigation, route }) {
   const [recentCounters, setRecentCounters] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const { new_counter } = route.params || {};
+    const refresh_data = new_counter ? true : false;
+    fetchData(refresh_data);
+    if (new_counter) {
+      delete route.params.new_counter;
+    }
+  }, [route.params]);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -43,16 +48,16 @@ export default function HomeVendor({ navigation }) {
   const fetchData = async (fresh_data = false) => {
     const currentUser = await getCurrentUser();
 
-    if (fresh_data) {
+    const existing_counters = await getData("vendor_counters");
+    if (fresh_data || !existing_counters) {
       const { data: couter_data } = await getVendorCounters(
         currentUser.ID,
         "open"
       );
       await storeData("vendor_counters", couter_data.data.counters);
-      setRecentCounters(couter_data.data.counters);
+      setRecentCounters(couter_data.data.counters.slice(0, MAX_TOKEN_DISPLAY));
     } else {
-      const counters = await getData("vendor_counters");
-      setRecentCounters(counters.slice(0, MAX_TOKEN_DISPLAY));
+      setRecentCounters(existing_counters.slice(0, MAX_TOKEN_DISPLAY));
     }
   };
 

@@ -18,6 +18,16 @@ export default function AuthStack() {
         component={Signup}
         options={{ title: "Signup" }}
       />
+      {/* <Stack.Screen
+        name="HomeUser"
+        component={Home}
+        options={{ title: "Welcome User", headerBackVisible: false }}
+      />
+      <Stack.Screen
+        name="HomeVendor"
+        component={HomeVendor}
+        options={{ title: "Welcome Vendor", headerBackVisible: false }}
+      /> */}
     </Stack.Navigator>
   );
 }

@@ -44,3 +44,13 @@ export function searchVendor(text) {
   const url = `${endpoint}/search-vendor?text=${text}`;
   return httpService.get(url);
 }
+
+export function getUserTokens(user_id) {
+  const url = `${endpoint}/get-user-tokens?user_id=${user_id}`;
+  return httpService.get(url);
+}
+
+export function issueToken(data) {
+  const url = `${endpoint}/issue-token`;
+  return httpService.post(url, data);
+}

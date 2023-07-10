@@ -8,6 +8,7 @@ import VendorSettings from "../Screens/Settings/VendorSettings";
 import VendorCounters from "../Screens/Vendor/VendorCounters";
 import Home from "../Screens/User/Home";
 import GetToken from "../Screens/User/GetToken";
+import UserSettings from "../Screens/Settings/UserSettings";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +23,12 @@ export default function UserStack() {
       <Stack.Screen
         name="GetToken"
         component={GetToken}
-        options={{ title: "Get A Token", headerBackVisible: false }}
+        options={{ title: "Get A Token" }}
+      />
+      <Stack.Screen
+        name="UserSettings"
+        component={UserSettings}
+        options={{ title: "Settings" }}
       />
     </Stack.Navigator>
   );

@@ -1,23 +1,19 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import CounterItemStatusesToken from "./CounterItemStatusToken";
+import CounterItemStatuses from "./CounterItemStatuses";
 
-const CounterItemGetToken = ({ counterData, onTokenIssue }) => {
-  // console.log(counterData);
-  const { title, status, statuses_stats } = counterData;
+const TokenItem = ({ tokenData, onTrackToken }) => {
+  const { token_no, token_status, counter_id, counter_title } = tokenData;
 
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.leftSection}>
-        <Text style={styles.title}>{title}</Text>
-        <CounterItemStatusesToken statuses_stats={statuses_stats} />
+        <Text style={styles.token_no}>{`Token# ${token_no}`}</Text>
+        <Text style={styles.business_title}>{counter_title}</Text>
       </View>
       <View style={styles.rightSection}>
-        <Text
-          onPress={() => onTokenIssue(counterData.id)}
-          style={styles.button}
-        >
-          Get Token
+        <Text onPress={() => onTrackToken(tokenData)} style={styles.button}>
+          Track
         </Text>
       </View>
     </TouchableOpacity>
@@ -35,6 +31,7 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 8,
     marginBottom: 8,
+    width: "100%",
   },
   leftSection: {
     flex: 1,
@@ -43,6 +40,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "bold",
+  },
+  button: {
+    backgroundColor: "#007AFF",
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 16,
+    width: "100%",
+    color: "#fff",
   },
   tokensContainer: {
     flexDirection: "row",
@@ -62,28 +70,15 @@ const styles = StyleSheet.create({
     color: "#888",
   },
   rightSection: {
-    width: "40%",
-    // flex: 1,
-    marginLeft: 12,
-    alignSelf: "center",
+    alignItems: "flex-end",
   },
-  get_token: {
+  status: {
     fontSize: 16,
     textAlign: "right",
-    backgroundColor: "lightblue",
   },
-  button: {
-    backgroundColor: "#007AFF",
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 16,
-    width: "100%",
-    color: "#fff",
-    textAlign: "center",
+  token_no: {
+    fontSize: 26,
   },
 });
 
-export default CounterItemGetToken;
+export default TokenItem;
