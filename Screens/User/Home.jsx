@@ -7,6 +7,7 @@ import {
   View,
   Text,
   Modal,
+  ActivityIndicator,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "../../Stylels";
@@ -16,10 +17,10 @@ import {
   logout,
   storeData,
 } from "../../Services/auth";
-import CounterItem from "../../Components/CounterItem";
 import Heading from "../../Components/Header";
-import { getUserTokens } from "../../Services/model";
+import { getUserTokens, getCounterByID } from "../../Services/model";
 import TokenItem from "../../Components/TokenItem";
+import CounterItemStatuses from "../../Components/CounterItemStatuses";
 
 const MAX_TOKEN_DISPLAY = 5;
 const TOKEN_EXPIRY_IN_DAYS = 1;
@@ -29,6 +30,7 @@ export default function Home({ navigation, route }) {
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCounter, setSelectedCounter] = useState(null);
+  const [counterDetails, setCounterDetails] = useState(null);
 
   useEffect(() => {
     const { new_token } = route.params || {};
@@ -85,10 +87,18 @@ export default function Home({ navigation, route }) {
     navigation.navigate("GetToken");
   };
 
-  const handleTrackToken = (counterData) => {
-    console.log(counterData);
+  const handleTrackToken = async (counterData) => {
     setSelectedCounter(counterData);
     setModalVisible(true);
+
+    try {
+      const counterId = counterData.counter_id;
+      const { data: counterDetailsData } = await getCounterByID(counterId);
+      // console.log(counterDetailsData);
+      setCounterDetails(counterDetailsData.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleRefresh = async () => {
@@ -100,6 +110,7 @@ export default function Home({ navigation, route }) {
   const closeModal = () => {
     setModalVisible(false);
     setSelectedCounter(null);
+    setCounterDetails(null);
   };
 
   return (
@@ -150,7 +161,14 @@ export default function Home({ navigation, route }) {
                   <Text style={styles.modalTitle}>
                     {selectedCounter.counter_title}
                   </Text>
-                  {/* Display Counter Info Here */}
+                  {counterDetails ? (
+                    <CounterItemStatuses
+                      statuses_stats={counterDetails.counter.statuses_stats}
+                      layout="list"
+                    />
+                  ) : (
+                    <ActivityIndicator size="small" color="#888" />
+                  )}
                 </View>
               )}
 
