@@ -103,9 +103,9 @@ const Login = ({ navigation }) => {
               <Text style={styles.buttonText}>Login</Text>
             )}
           </TouchableOpacity>
-          <TouchableOpacity onPress={navigateSignup}>
+          {/* <TouchableOpacity onPress={navigateSignup}>
             <Text style={styles.forgotPassword}>Don't have an account?</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       )}
       {UserID && <VerifyPin onVerification={handleVerification} />}

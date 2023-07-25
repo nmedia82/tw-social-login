@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeVendor from "../Screens/Vendor/HomeVendor";
-import CreateNewCounter from "../Screens/Vendor/CreateCounter";
-import CounterDetail from "../Screens/Vendor/CounterDetail";
-import CounterTokens from "../Screens/Vendor/CounterTokens";
+import HomeVendor from "../Screens/Vendorzz/HomeVendor";
+import CreateNewCounter from "../Screens/Vendorzz/CreateCounter";
+import CounterDetail from "../Screens/Vendorzz/CounterDetail";
+import CounterTokens from "../Screens/Vendorzz/CounterTokens";
 import VendorSettings from "../Screens/Settings/VendorSettings";
-import VendorCounters from "../Screens/Vendor/VendorCounters";
+import VendorCounters from "../Screens/Vendorzz/VendorCounters";
 
 const Stack = createNativeStackNavigator();
 

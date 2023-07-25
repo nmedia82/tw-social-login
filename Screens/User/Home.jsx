@@ -26,6 +26,7 @@ const MAX_TOKEN_DISPLAY = 5;
 const TOKEN_EXPIRY_IN_DAYS = 1;
 
 export default function Home({ navigation, route }) {
+  const [UserName, setUserName] = useState([]);
   const [myTokens, setMyTokens] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -54,6 +55,7 @@ export default function Home({ navigation, route }) {
   const fetchData = async (freshData = false) => {
     try {
       const currentUser = await getCurrentUser();
+      setUserName(currentUser.data.display_name);
       const existingTokens = await getData("user_tokens");
 
       let tokens;
@@ -121,17 +123,14 @@ export default function Home({ navigation, route }) {
       }
     >
       <SafeAreaView style={styles.screenContainer}>
-        <TouchableOpacity
-          onPress={handleIssueToken}
-          style={styles.iconContainer}
-        >
+        <TouchableOpacity style={styles.iconContainer}>
           <Icon
             name="plus-circle"
             size={98}
             color="orange"
             style={styles.ticketIcon}
           />
-          <Text>Get Token</Text>
+          <Text>Hi {UserName}</Text>
         </TouchableOpacity>
 
         {myTokens.length > 0 && (

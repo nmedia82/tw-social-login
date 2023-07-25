@@ -4,10 +4,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfileScreen from "../Screens/Profile";
 import Login from "../Screens/Login";
 import Home from "../Screens/User/Home";
-import HomeVendor from "../Screens/Vendor/HomeVendor";
+import HomeVendor from "../Screens/Vendorzz/HomeVendor";
 import Signup from "../Screens/Signup";
 import { get_user_role } from "../Services/helper";
-import CreateNewCounter from "../Screens/Vendor/CreateCounter";
+import CreateNewCounter from "../Screens/Vendorzz/CreateCounter";
 
 const Stack = createNativeStackNavigator();
 
