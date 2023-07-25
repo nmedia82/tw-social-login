@@ -53,6 +53,7 @@ const GetToken = ({ navigation }) => {
     try {
       const { data: response } = await issueToken(postData);
       const { data, success } = response;
+      console.log(data);
       if (!success) {
         setSearchText("");
         setIsLoading(false);
